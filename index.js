@@ -16,9 +16,12 @@ const execAsync = util.promisify(exec);
         let i = 0;
         while (true) {
             const video = videos[i];
-            await execAsync(`ffmpeg-webrtc -re -i ${prefix}${video} -c copy -f whip ${process.env.URL}`);
+            const { stdout, stderr } = await execAsync(`ffmpeg-webrtc -re -i ${prefix}${video} -c copy -f whip ${process.env.URL}`);
 
             i = (i + 1) % videos.length;
+
+            // console.log(stdout);
+            console.log(stderr);
         }
     } catch (error) {
         console.error(error);

@@ -20,8 +20,9 @@ const execAsync = util.promisify(exec);
 
             i = (i + 1) % videos.length;
 
-            // console.log(stdout);
-            console.log(stderr);
+            if (stderr) {
+                throw stderr
+            }
         }
     } catch (error) {
         console.error(error);

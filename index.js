@@ -1,31 +1,21 @@
-import { exec } from "child_process";
-import util from "util";
+import { spawnSync } from "child_process";
 import config from "./config.json" with { type: "json" };
 
-const execAsync = util.promisify(exec);
+if (!process.env.URL) {
+    console.error("No WHIP endpoint provided");
+    return;
+}
 
-(async () => {
-    if (!process.env.URL) {
-        console.error("No WHIP endpoint provided");
-        return;
+const { prefix, videos } = config;
+
+while (true) {
+    for (const video of videos) {
+        const { stderr } = spawnSync(`ffmpeg-webrtc -re -i ${prefix}${video} -c copy -f whip "${process.env.URL}"`);
+        i = (i + 1) % videos.length;
+
+        if (stderr.toString() !== "") {
+            console.error(stderr.toString());
+            return;
+        } 
     }
-
-    const { prefix, videos } = config;
-
-    try {
-        let i = 0;
-        while (true) {
-            const video = videos[i];
-            const { stdout, stderr } = await execAsync(`ffmpeg-webrtc -re -i ${prefix}${video} -c copy -f whip ${process.env.URL}`);
-
-            i = (i + 1) % videos.length;
-
-            if (stderr) {
-                throw stderr
-            }
-        }
-    } catch (error) {
-        console.error(error);
-        return;
-    }
-})();
+}

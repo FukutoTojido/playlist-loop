@@ -11,14 +11,9 @@ function main() {
 
     while (true) {
         for (const video of videos) {
-            const { stderr } = spawnSync("ffmpeg-webrtc", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `whip`, `"${process.env.URL}"`], {
+            spawnSync("ffmpeg-webrtc", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `whip`, `"${process.env.URL}"`], {
                 shell: true,
             });
-
-            if (stderr) {
-                console.error(stderr.toString());
-                return;
-            }
         }
     }
 }

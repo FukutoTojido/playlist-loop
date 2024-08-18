@@ -13,7 +13,7 @@ function main() {
         for (const video of videos) {
             const { stderr } = spawnSync(`ffmpeg-webrtc -re -i ${prefix}${video} -c copy -f whip "${process.env.URL}"`);
     
-            if (stderr.toString() !== "") {
+            if (stderr) {
                 console.error(stderr.toString());
                 return;
             } 

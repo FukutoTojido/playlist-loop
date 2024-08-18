@@ -16,7 +16,7 @@ const execAsync = util.promisify(exec);
         let i = 0;
         while (true) {
             const video = videos[i];
-            await execAsync(`ffmpeg-webrtc -stream_loop -1 -re -i ${prefix}${video} -c copy -f whip ${process.env.URL}`);
+            await execAsync(`ffmpeg-webrtc -re -i ${prefix}${video} -c copy -f whip ${process.env.URL}`);
 
             i = (i + 1) % videos.length;
         }

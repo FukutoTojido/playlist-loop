@@ -11,7 +11,7 @@ function main() {
 
     while (true) {
         for (const video of videos) {
-            spawnSync("ffmpeg-webrtc", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `whip`, `"${process.env.URL}"`], {
+            spawnSync("ffmpeg", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `whip`, `"${process.env.URL}"`, `-authorization`, `${process.env.PASSWORD}`], {
                 shell: true,
             });
         }

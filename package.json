@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^24.5.2",
     "child_process": "^1.0.2",
     "util": "^0.12.5"
   }

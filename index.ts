@@ -11,7 +11,10 @@ function main() {
 
     while (true) {
         for (const video of videos) {
-            spawnSync("ffmpeg", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `whip`, `"${process.env.URL}"`, `-authorization`, `${process.env.PASSWORD}`], {
+            // spawnSync("ffmpeg", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `whip`, `"${process.env.URL}"`, `-authorization`, `${process.env.PASSWORD}`], {
+            //     shell: true,
+            // });
+            spawnSync("ffmpeg", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `flv`, `"${process.env.URL}"`, `-authorization`, `${process.env.PASSWORD}`], {
                 shell: true,
             });
         }

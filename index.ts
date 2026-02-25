@@ -1,5 +1,4 @@
 import { spawnSync } from "child_process";
-import config from "./config.json" with { type: "json" };
 
 function main() {
     if (!process.env.URL) {
@@ -7,18 +6,9 @@ function main() {
         return;
     }
 
-    const { prefix, videos } = config;
-
-    while (true) {
-        for (const video of videos) {
-            // spawnSync("ffmpeg", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, `-f`, `whip`, `"${process.env.URL}"`, `-authorization`, `${process.env.PASSWORD}`], {
-            //     shell: true,
-            // });
-            spawnSync("ffmpeg", [`-re`, `-i`, `${prefix}${video}`, `-c`, `copy`, '-b:v', "2000k", `-f`, `flv`, `"${process.env.URL}"`, `-authorization`, `${process.env.PASSWORD}`], {
-                shell: true,
-            });
-        }
-    }
+    spawnSync("ffmpeg", [`-re`, '-stream_loop', '-1', `-i`, `./Videos/ittai.mp4`, `-c`, `copy`, '-b:v', "2000k", `-f`, `flv`, `"${process.env.URL}"`, `-authorization`, `${process.env.PASSWORD}`], {
+    	shell: true,
+    });
 }
 
 main();
